@@ -1,6 +1,6 @@
 # Lab 04: Loops and Functions Practice
-# Student Name: [Your Name]
-# Date: [Date]
+# Student Name: Arnaldo Neto
+# Date:cfeb 03 2026
 
 # ============================================
 # Question 1: Robot Return to Origin
@@ -26,7 +26,6 @@ for moves in test_moves:
     result = robot_returns_to_origin(moves)
     print("Moves '" + moves + "': Returns to origin? " + str(result))
     
-
 
 # ============================================
 # Question 2: Two Sum
