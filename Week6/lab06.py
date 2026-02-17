@@ -182,19 +182,14 @@ def parse_arp_table(output):
 
 def write_to_log(filename, entry):
     """Append a log entry to a text file."""
-    # *** YOUR CODE HERE ***
-    # Open the file in append mode ("a") using a with statement
-    # Write the entry + "\n" to the file
-    pass
-
+    with open(filename, "a") as file:
+        file.write(entry + "\n")
+    
 
 def read_log(filename):
     """Read and return the entire contents of a log file."""
-    # *** YOUR CODE HERE ***
-    # Open the file in read mode ("r") using a with statement
-    # Return the result of file.read()
-    pass
-
+    with open(filename, "r") as file:
+        return file.read()
 
 # This function is COMPLETE — it uses write_to_log() above
 def log_command_result(command_name, target, output, filename):
@@ -231,7 +226,12 @@ def log_to_csv(filename, command, target, result, status):
     # Open filename in append mode ("a") with newline=""
     # Create a csv.writer(file)
     # Write one row: [timestamp, command, target, result, status]
-    pass
+
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    with open(filename, "a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([timestamp, command, target, result, status])
 
 
 def read_csv_log(filename):
@@ -240,6 +240,10 @@ def read_csv_log(filename):
     # Open filename in read mode ("r") with newline=""
     # Create a csv.reader(file)
     # Loop through rows and print: " | ".join(row)
+    with open(filename, "r", newline="") as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(" | ".join(row))
     pass
 
 
@@ -342,6 +346,19 @@ def safe_read_log(filename):
     #     return ""
     # finally:
     #     print "Log read attempt completed."
+    try:
+        with open(filename, "r") as file:
+            content = file.read()
+            if content == 0:
+                print("Log file is empty.")
+                return ""
+            else:
+                return content
+    except FileNotFoundError:
+        print("No log file found. Run a diagnostic first.")
+        return ""
+    finally:        print("Log read attempt completed.")
+
     pass
 
 
@@ -510,5 +527,5 @@ def main():
 #  TEST YOUR WORK
 # ============================================================
 # After completing Tasks 1-3, uncomment the line below to run:
-# main()
+main()
 # ============================================================
